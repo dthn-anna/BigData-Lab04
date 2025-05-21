@@ -1,2 +1,4 @@
 echo "data/" >> .gitignore
 echo "*.tar.gz" >> .gitignore
+data/
+*.tar.gz
