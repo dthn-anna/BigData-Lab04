@@ -1,6 +1,7 @@
 from trainer import SparkConfig, Trainer
 from models import SVM
 from transforms import Transforms, RandomHorizontalFlip, Normalize
+from pyspark.sql import SparkSession
 
 transforms = Transforms([
     RandomHorizontalFlip(p=0.345), 
@@ -10,11 +11,18 @@ transforms = Transforms([
     )
 ])
 
+
+
 if __name__ == "__main__":
 
     spark_config = SparkConfig()
 
+    spark = SparkSession.builder \
+    .appName(spark_config.appName) \
+    .master(f"{spark_config.host}[{spark_config.receivers}]") \
+    .getOrCreate()
+
     svm = SVM(loss="squared_hinge", penalty="l2")
-    trainer = Trainer(svm, "train", spark_config, transforms)
+    trainer = Trainer(svm, "train", spark_config, transforms, spark)
     trainer.train()
     # trainer.predict()

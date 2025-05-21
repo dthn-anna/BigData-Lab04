@@ -10,7 +10,3 @@ class Transforms:
             input = transformer.transform(input)
 
         return input
-    
-
-# Lớp Transforms bao gồm các phép biến đổi: resize, normalize, RandomHorizontalFlip, ColorShift...
-# Mỗi phép biến đổi trong lớp đều có phương thức .transform() 
